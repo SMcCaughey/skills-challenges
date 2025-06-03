@@ -47,7 +47,7 @@ estimate_time("word") => "less than 1 minute"
 Given a string of 200 words exactly
 It returns a string indicating that it would take one minute
 """
-estimate_time("word"*200) => "one minute"
+estimate_time("word "*200) => "one minute"
 
 ```
 
@@ -62,15 +62,15 @@ Here's an example for you to start with:
 ```python
 # EXAMPLE
 
-from lib.extract_uppercase import *
+from lib.estimate_time import *
 
 """
-Given a lower and an uppercase word
-It returns a list with the uppercase word
+Given a string of less than 200 words
+It returns a string indicating that it would take less than a minute
 """
-def test_extract_uppercase_with_upper_then_lower():
-    result = extract_uppercase("hello WORLD")
-    assert result == ["WORLD"]
+def test_estimate_time_with_less_than_200_words():
+    result = estimate_time("word")
+    assert result == "less than 1 minute"
 ```
 
 Ensure all test function names are unique, otherwise pytest will ignore them!
