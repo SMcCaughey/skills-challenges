@@ -22,10 +22,10 @@ def estimate_time(text):
         text: a string containing words (e.g. "Hello World")
 
     Returns: (state the return value and its type)
-        An string value of how many minutes it would take to read the text, rounded to the nearest minute.
+        An float value of how many minutes it would take to read the text, with the values after the decimal being fractions of one minute rather than seconds.
 
     Side effects: (state any side effects)
-        May only give time to nearest minute
+        Will throw error if no text input.
     """
     pass # Test-driving means _not_ writing any code here yet.
 ```
@@ -39,15 +39,28 @@ _Make a list of examples of what the function will take and return._
 
 """
 Given a string of less than 200 words
-It returns a string indicating that it would take less than a minute
+It returns a float indicating what fraction of a minute it would take to read, e.g. 0.5 = half a minute = 30 seconds.
 """
-estimate_time("word") => "less than 1 minute"
+estimate_time("word "*100) => 0.5
 
 """
 Given a string of 200 words exactly
-It returns a string indicating that it would take one minute
+It returns a float of 1.0
 """
-estimate_time("word "*200) => "one minute"
+estimate_time("word "*200) => 1.0
+
+"""
+Given a string of 376 words
+It returns a float of 1.88
+"""
+estimate_time("word "*376) => 1.88
+
+"""
+Given an empty input
+It throws an error saying "You can't read what is not there."
+"""
+estimate_time("") => "You can't read what is not there."
+
 
 ```
 
@@ -65,12 +78,37 @@ Here's an example for you to start with:
 from lib.estimate_time import *
 
 """
-Given a string of less than 200 words
-It returns a string indicating that it would take less than a minute
+Given a string of 100 words
+It returns a float of 0.5
 """
 def test_estimate_time_with_less_than_200_words():
-    result = estimate_time("word")
-    assert result == "less than 1 minute"
-```
+    result = estimate_time("word"*100)
+    assert result == 0.5
 
-Ensure all test function names are unique, otherwise pytest will ignore them!
+"""
+Given a string of 200 words exactly
+It returns a float of 1.0
+"""
+def test_estimate_time_200_words():
+    result = estimate_time("word "*200)
+    assert result == 1.0
+
+"""
+Given a string of 376 words
+It returns a float of 1.88
+"""
+def test_estimate_time_376_words():
+    result = estimate_time("word "*376)
+    assert result == 1.88
+
+"""
+Given an empty input
+It throws an error saying "You can't read what is not there."
+"""
+def test_estimate_no_input():
+    import pytest as py
+    with py.raises(Exception) as e:
+        estimate_time("")
+    error_message = str(e.value)
+    assert error_message == "You can't read what is not there."
+```
