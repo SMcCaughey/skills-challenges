@@ -109,25 +109,25 @@ import pytest
 
 def test_list_is_created():
    jobs = Tracker()
-   assert jobs.todo == []
+   assert jobs.todo() == []
 
 def test_add_to_list():
     jobs = Tracker()
     jobs.add_task("first")
-    assert jobs.todo == ["first"]
+    assert jobs.todo() == ["first"]
 
 def test_add_several_to_list():
     jobs = Tracker()
     jobs.add_task("first")
     jobs.add_task("second")
-    assert jobs.todo ==["first", "second"]
+    assert jobs.todo() ==["first", "second"]
 
 def test_complete_task():
     jobs = Tracker()
     jobs.add_task("first")
     jobs.add_task("second")
     jobs.complete_task("first")
-    assert jobs.todo == ["second"]
+    assert jobs.todo() == ["second"]
 
 def test_add_empty_task():
     jobs = Tracker()
