@@ -51,11 +51,11 @@ class Tracker():
             # self._tasks (list) a list of tasks that have yet to be finished, manipulated by other methods.
         # Side Effects
             # None
-```python
+```
 
 _Make a list of examples of how the class will behave in different situations._
 
-``` python
+```python
 
 """
 Given a task
@@ -63,15 +63,37 @@ Given a task
 """
 jobs = Tracker()
 jobs.add_task("first")
-todo.jobs() => ["first"]
+jobs.todo() => ["first"]
 
 """
 Given an empty input
 # Raises Exception - "Don't be lazy!"
 """
 jobs = Tracker()
-jobs.add_task("")
-returns "Don't be lazy!"
+jobs.add_task("") => "Don't be lazy!"
+
+"""
+Given a task on the list is completed
+# Removes task from the list
+"""
+jobs = Tracker()
+jobs.complete_task("first")
+jobs.todo() => []
+
+"""
+Given a task that is not on the list is completed
+# Raises exception "Not on list."
+"""
+jobs = Tracker()
+jobs.complete_task("second") => "Not on list."
+
+"""
+Bring up the todo list
+# Returns self.tasks
+"""
+jobs = Tracker()
+jobs.todo() => []
+
 ```
 
 _Encode each example as a test. You can add to the above list as you go._
@@ -79,3 +101,45 @@ _Encode each example as a test. You can add to the above list as you go._
 ## 4. Implement the Behaviour
 
 _After each test you write, follow the test-driving process of red, green, refactor to implement the behaviour._
+
+```python
+
+from lib.todo import *
+import pytest 
+
+def test_list_is_created():
+   jobs = Tracker()
+   assert jobs.todo == []
+
+def test_add_to_list():
+    jobs = Tracker()
+    jobs.add_task("first")
+    assert jobs.todo == ["first"]
+
+def test_add_several_to_list():
+    jobs = Tracker()
+    jobs.add_task("first")
+    jobs.add_task("second")
+    assert jobs.todo ==["first", "second"]
+
+def test_complete_task():
+    jobs = Tracker()
+    jobs.add_task("first")
+    jobs.add_task("second")
+    jobs.complete_task("first")
+    assert jobs.todo == ["second"]
+
+def test_add_empty_task():
+    jobs = Tracker()
+    with pytest.raises(Exception) as e:
+        jobs.add_task("") 
+    assert str(e.value) == "Don't be lazy!"
+
+def test_complete_unrecognised_task():
+    jobs = Tracker()
+    jobs.add_task("first")
+    with pytest.raises(Exception) as e:
+        jobs.complete_task("second") 
+    assert str(e.value) == "Not on list."
+
+```
