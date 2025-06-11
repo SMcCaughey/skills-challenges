@@ -9,6 +9,6 @@ class VowelRemover:
         i = 0
         while i < len(self.text):
             if self.text[i].lower() in self.vowels:
-                self.text = self.text[:i] + self.text[i:]
-            i += 1
+                self.text = self.text[:i] + self.text[i+1:]
+            else: i += 1
         return self.text
